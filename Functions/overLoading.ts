@@ -15,13 +15,17 @@ type AddOverloading = {
 //     return a + b
 // }
 
-
-
-//any 타입 추론 이유
-const addOver: AddOverloading = (a: number, b: number | string) => {
+const addOver: AddOverloading = (a, b) => {
     if (typeof b === 'string') return a
     return a + b
 }
+
+
+//any 타입 추론 이유
+// const addOver: AddOverloading = (a: number, b: number | string) => {
+//     if (typeof b === 'string') return a
+//     return a + b
+// }
 
 /*
 https://joshua1988.github.io/ts/guide/type-alias.html#%ED%83%80%EC%9E%85-%EB%B3%84%EC%B9%AD-type-aliases
@@ -56,4 +60,22 @@ const push:Push = (config:any) => {
     else {
         console.log(config.path)
     }
+}
+
+//오버로딩이 다른 여러개의 argument를 가지고 있을 떄 발생하는 효과
+type Add = {
+    (a: number, b:number): number;
+    (a: number, b:number, c: number): number; 
+    //c는 option이라는 뜻
+    
+}
+
+// c의 타입을 안 정해주면 에러가 난다.
+// const add: Add= (a, b, c) => {
+//     return a + b;
+// }
+
+const add: Add= (a, b, c?:number) => {
+    if(c) return a+b+c
+    return a + b;
 }
